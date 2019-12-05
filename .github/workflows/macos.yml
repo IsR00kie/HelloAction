@@ -1,0 +1,26 @@
+name: Macos Releases
+
+on: 
+  push:
+    tags:
+    - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    env:
+      packageName: "HelloAction-${GITHUB_REF:11}"
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: package 
+        run: |
+          zip -r "${{ env.packageName }}-${{ runner.os }}.zip" src LICENSE README.md -r
+          ls -lha
+      
+      - uses: ncipollo/release-action@v1
+        with:
+          # artifacts: "HelloAction-*.zip"
+          artifacts: "${{ env.packageName }}-${{ runner.os }}.zip"
+          bodyFile: "body.md"
+          token: ${{ secrets.GITHUB_TOKEN }}
