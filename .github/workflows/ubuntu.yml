@@ -24,3 +24,4 @@ jobs:
           artifacts: "${{ env.packageName }}-${{ runner.os }}.zip"
           bodyFile: "body.md"
           token: ${{ secrets.GITHUB_TOKEN }}
+          
