@@ -17,10 +17,17 @@ jobs:
         run: |
           zip -r "${{ env.packageName }}-${{ runner.os }}.zip" src LICENSE README.md -r
           ls -lha
-      
-      - uses: ncipollo/release-action@v1
+
+      - name: Create Latest tag
+        uses: EndBug/latest-tag@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v1-release
         with:
-          # artifacts: "HelloAction-*.zip"
-          artifacts: "${{ env.packageName }}-${{ runner.os }}.zip"
-          bodyFile: "body.md"
-          token: ${{ secrets.GITHUB_TOKEN }}
+          file: "${{ env.packageName }}-${{ runner.os }}.zip"
+          asset_name: "${{ env.packageName }}-${{ runner.os }}.zip"
+          tag: latest
+          overwrite: true
+          repo_token: ${{ secrets.GITHUB_TOKEN }} 
