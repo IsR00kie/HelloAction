@@ -22,8 +22,8 @@ jobs:
       
       - uses: ncipollo/release-action@v1
         with:
-          # artifacts: "HelloAction-*.zip"
-          artifacts: "${{ env.packageName }}-${{ runner.os }}.zip"
+          artifacts: "HelloAction-*.zip"
+          # artifacts: "${{ env.packageName }}-${{ runner.os }}.zip"
           bodyFile: "body.md"
           token: ${{ secrets.GITHUB_TOKEN }}
          
